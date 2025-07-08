@@ -1,25 +1,23 @@
 import { Request, Response, NextFunction } from "express";
-import { verifyTokenJWT } from "../utils/verifyTokenJWT";
+import jwt from "jsonwebtoken";
 
 export interface AuthRequest extends Request {
     userID?: number; 
 }
 
 export function verifyToken(req: AuthRequest, res: Response, next: NextFunction) {
-    const authHeader = req.headers.authorization;
-    const token = authHeader?.split(" ")[1];
+  const authHeader = req.headers.authorization;
+  const token = authHeader?.split(' ')[1];
 
-    if (!token) {
-        res.status(401).json({ message: "Access denied, token missing" });
-        return;
-    }
+  if (!token) {
+    return res.status(401).json({ message: "Access denied, token missing" });
+  }
 
-    const decoded = verifyTokenJWT(token);
-    if (!decoded) {
-        res.status(401).json({ message: "Invalid token" });
-        return;
-    }
-
-    req.userID = decoded.userID; 
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!);
+    req.userID = (decoded as { userID: number }).userID;
     next();
+  } catch {
+    res.status(403).json({ message: "Invalid or expired token" });
+  }
 }
