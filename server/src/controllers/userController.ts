@@ -54,7 +54,6 @@ export async function loginUser(req: Request, res: Response) {
             return res.status(401).json({ error: "Invalid credentials" });
         }
 
-        // ✅ Here you can generate a JWT token if needed
         res.json({ message: "Login successful", userId: user.id });
     } catch (error) {
         res.status(500).json({ error: "Failed to login" });
