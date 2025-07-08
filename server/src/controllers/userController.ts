@@ -1,5 +1,7 @@
-import { Request,Response } from "express";
+import { Request, Response } from "express";
 import prisma from "../config/prismaClient";
+import bcrypt from "bcrypt";
+
 
 export async function getAllUsers(req: Request, res: Response) {
     try {
@@ -8,7 +10,7 @@ export async function getAllUsers(req: Request, res: Response) {
                 posts: true,
                 comments: true,
             },
-          
+
         });
         res.json(users);
     } catch (error) {
@@ -20,11 +22,12 @@ export async function registerUser(req: Request, res: Response) {
     const { username, email, password } = req.body;
 
     try {
+        const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = await prisma.user.create({
             data: {
-                username,
+                name: username,
                 email,
-                password, 
+                password: hashedPassword,
             },
         });
         res.status(201).json(newUser);
@@ -41,11 +44,17 @@ export async function loginUser(req: Request, res: Response) {
             where: { email },
         });
 
-        if (!user || user.password !== password) {
+        if (!user) {
             return res.status(401).json({ error: "Invalid credentials" });
         }
 
-        // Here you would typically generate a JWT token
+        const isMatch = await bcrypt.compare(password, user.password);
+
+        if (!isMatch) {
+            return res.status(401).json({ error: "Invalid credentials" });
+        }
+
+        // ✅ Here you can generate a JWT token if needed
         res.json({ message: "Login successful", userId: user.id });
     } catch (error) {
         res.status(500).json({ error: "Failed to login" });
