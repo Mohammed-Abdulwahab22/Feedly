@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
 export interface AuthRequest extends Request {
-    userID?: number; 
+    userID?: string; 
 }
 
 export function verifyToken(req: AuthRequest, res: Response, next: NextFunction) {
@@ -15,7 +15,7 @@ export function verifyToken(req: AuthRequest, res: Response, next: NextFunction)
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET!);
-    req.userID = (decoded as { userID: number }).userID;
+    req.userID = (decoded as { userID: string }).userID;
     next();
   } catch {
     res.status(403).json({ message: "Invalid or expired token" });
