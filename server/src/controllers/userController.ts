@@ -6,18 +6,18 @@ const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret";
 
 
 export async function getAllUsers(req: Request, res: Response) {
-    try {
-        const users = await prisma.user.findMany({
-            include: {
-                posts: true,
-                comments: true,
-            },
+  try {
+    const users = await prisma.user.findMany({
+      include: {
+        posts: true,
+        comments: true,
+      },
 
-        });
-        res.json(users);
-    } catch (error) {
-        res.status(500).json({ error: "Failed to fetch users" });
-    }
+    });
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch users" });
+  }
 }
 
 export async function registerUser(req: Request, res: Response) {
@@ -46,18 +46,27 @@ export async function registerUser(req: Request, res: Response) {
   }
 }
 
-
-
-
 export async function loginUser(req: Request, res: Response) {
-  const { email, password } = req.body;
+  const { identifier, password } = req.body; 
 
   try {
-    const user = await prisma.user.findUnique({ where: { email } });
-    if (!user) return res.status(401).json({ error: "Invalid credentials" });
+    const user = await prisma.user.findFirst({
+      where: {
+        OR: [
+          { email: identifier },
+          { name: identifier }
+        ]
+      }
+    });
+
+    if (!user) {
+      return res.status(401).json({ error: "Invalid credentials" });
+    }
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(401).json({ error: "Invalid credentials" });
+    if (!isMatch) {
+      return res.status(401).json({ error: "Invalid credentials" });
+    }
 
     const token = jwt.sign({ userID: user.id }, JWT_SECRET, { expiresIn: "7d" });
 
@@ -66,4 +75,3 @@ export async function loginUser(req: Request, res: Response) {
     res.status(500).json({ error: "Failed to login" });
   }
 }
-
