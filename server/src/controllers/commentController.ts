@@ -104,3 +104,22 @@ export async function deleteComment(req: AuthRequest, res: Response) {
     }
 }
 
+export async function getCommentsByPost(req: Request, res: Response) {
+  const { postId } = req.params;
+
+  try {
+    const comments = await prisma.comment.findMany({
+      where: { postId },
+      include: {
+        user: true,
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+
+    res.json(comments);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch comments for this post" });
+  }
+}
