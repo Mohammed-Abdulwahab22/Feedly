@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 
 import userRoute from './routes/userRoutes';
 import postRoutes from './routes/postRoutes';
-// import commentRoutes from './routes/commentRoutes';
+import commentRoutes from './routes/commentRoutes';
 
 dotenv.config();
 
@@ -14,7 +14,7 @@ app.use(express.json());
 
 app.use('/api/users', userRoute); 
 app.use('/api/posts', postRoutes);
-// app.use('/api/comments', commentRoutes);
+app.use('/api/comments', commentRoutes);
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
