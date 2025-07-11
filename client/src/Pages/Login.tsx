@@ -6,8 +6,7 @@ import "../styles/Login.css"
 // import {LoginUser} from '../api/auth';
 
 export const Login = () => {
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
+  const [emailOrUsername, setEmailOrUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
@@ -20,7 +19,7 @@ export const Login = () => {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email || !password) {
+    if (!emailOrUsername || !password) {
       toast.error("Please fill in all fields");
       return;
     }
@@ -43,8 +42,8 @@ export const Login = () => {
         <label>Email Address</label>
         <input
           type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={emailOrUsername}
+          onChange={(e) => setEmailOrUsername(e.target.value)}
           required />
         <label>Password</label>
         <input
