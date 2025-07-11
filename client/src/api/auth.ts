@@ -24,3 +24,18 @@ export async function LoginUser(identifier: string, password: string) {
   }
 }
 
+export async function RegisterUser(username: string, email: string, password: string) {
+  try {
+    const response = await axios.post(`${API_BASE}/users/register`, {
+      username,
+      email,
+      password
+    });
+    return response.data;
+  } catch (error: any) {
+    return {
+      success: false,
+      message: error?.response?.data?.error || "Registration failed"
+    };
+  }
+}
