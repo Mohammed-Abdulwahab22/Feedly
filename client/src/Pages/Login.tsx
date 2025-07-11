@@ -4,6 +4,7 @@ import { toast } from 'react-toastify'
 
 import "../styles/Login.css"
 import {LoginUser} from '../api/auth';
+import { getItem, setItem } from '../utils/storage';
 
 export const Login = () => {
   const [emailOrUsername, setEmailOrUsername] = useState("");
@@ -11,10 +12,15 @@ export const Login = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const checkToken = async () => {
+      const token = await getItem("token");
     if (token) {
       navigate("/");
     }
+    }
+
+    checkToken();
+    
   }, [navigate]);
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -23,7 +29,8 @@ export const Login = () => {
   try {
     const response = await LoginUser(emailOrUsername, password);
     if (response.token) {
-      localStorage.setItem("token", response.token);
+      setItem("token", response.token);
+      toast.success("Login successful");
       navigate("/");
     } else {
       toast.error(response.message || "Login failed");
