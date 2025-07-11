@@ -18,20 +18,21 @@ export const Login = () => {
   }, [navigate]);
 
   const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!emailOrUsername || !password) {
-      toast.error("Please fill in all fields");
-      return;
-    }
+  e.preventDefault();
 
-    // const response = await LoginUser({ email, password });
-    // if (response.success) {
-    //   localStorage.setItem("token", response.token);
-    //   navigate("/");
-    // } else {
-    //   toast.error(response.message);
-    // }
+  try {
+    const response = await LoginUser(emailOrUsername, password);
+    if (response.token) {
+      localStorage.setItem("token", response.token);
+      navigate("/");
+    } else {
+      toast.error(response.message || "Login failed");
+    }
+  } catch (err) {
+    toast.error("Unexpected error occurred");
   }
+};
+
 
 
   return (
@@ -39,15 +40,14 @@ export const Login = () => {
       <form className='login-form' onSubmit={handleLogin}>
         <h1>Feedly</h1>
         <h2>Sign In To Your Account</h2>
-        <label>Email Address</label>
         <input
-          type="email"
+          placeholder='Enter your email or username'
           value={emailOrUsername}
           onChange={(e) => setEmailOrUsername(e.target.value)}
           required />
-        <label>Password</label>
         <input
           type="password"
+          placeholder='Enter your password'
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required />
