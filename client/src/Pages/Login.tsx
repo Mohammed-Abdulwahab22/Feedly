@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 import "../styles/Login.css"
-// import {LoginUser} from '../api/auth';
+import {LoginUser} from '../api/auth';
 
 export const Login = () => {
   const [emailOrUsername, setEmailOrUsername] = useState("");
