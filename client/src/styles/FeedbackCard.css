@@ -1,0 +1,64 @@
+.feedback-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: #ffffff;
+  padding: 20px;
+  margin-bottom: 15px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  transition: 0.2s ease;
+}
+
+.feedback-card:hover {
+  transform: scale(1.01);
+}
+
+.feedback-title {
+  font-size: 1.2rem;
+  color: #1f2937;
+  margin: 0;
+}
+
+.feedback-description {
+  font-size: 0.95rem;
+  color: #4b5563;
+  margin: 10px 0;
+}
+
+.feedback-meta {
+  font-size: 0.8rem;
+  color: #6b7280;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.feedback-category {
+  background-color: #e0f2fe;
+  color: #0284c7;
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.feedback-author,
+.feedback-date {
+  opacity: 0.8;
+}
+
+.feedback-card-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.feedback-upvotes,
+.feedback-comments {
+  background: #f3f4f6;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: #374151;
+  cursor: pointer;
+}
