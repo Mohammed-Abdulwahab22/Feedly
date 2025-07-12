@@ -1,0 +1,39 @@
+.home-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 30px 20px;
+  background: #f9fafb;
+  min-height: 100vh;
+}
+
+.home-title {
+  font-size: 2rem;
+  color: #1f2937;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.feedback-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.home-loading {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #4b5563;
+  padding-top: 100px;
+}
+
+.feedback-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media (min-width: 768px) {
+  .feedback-list {
+    grid-template-columns: 1fr 1fr;
+  }
+}

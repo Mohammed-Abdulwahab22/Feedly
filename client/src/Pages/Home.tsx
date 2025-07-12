@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { getAllPosts } from '../api/posts';
 import { FeedbackCard } from '../components/FeedbackCard';
+import "../styles/Home.css";
 
 export const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -16,19 +17,19 @@ export const Home = () => {
       } finally {
         setLoading(false);
       }
-    }
+    };
     fetchPosts();
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="home-loading">Loading...</div>;
   }
 
   return (
-    <div>
-      <h1>Posts</h1>
+    <div className="home-container">
+      <h1 className="home-title">Product Feedback Board</h1>
 
-      <ul>
+      <div className="feedback-list">
         {posts.map(post => (
           <FeedbackCard
             key={post.id}
@@ -42,7 +43,7 @@ export const Home = () => {
             createdAt={post.createdAt}
           />
         ))}
-      </ul>
+      </div>
     </div>
-  )
-}
+  );
+};
