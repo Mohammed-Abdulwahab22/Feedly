@@ -1,5 +1,6 @@
-import React,{useState,useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { getAllPosts } from '../api/posts';
+import { FeedbackCard } from '../components/FeedbackCard';
 
 export const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -26,9 +27,20 @@ export const Home = () => {
   return (
     <div>
       <h1>Posts</h1>
+
       <ul>
         {posts.map(post => (
-          <li key={post.id}>{post.title}</li>
+          <FeedbackCard
+            key={post.id}
+            id={post.id}
+            title={post.title}
+            description={post.description}
+            category={post.category}
+            upvotes={post.upvotes}
+            commentsCount={post.comments.length}
+            userName={post.user.name}
+            createdAt={post.createdAt}
+          />
         ))}
       </ul>
     </div>
