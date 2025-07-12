@@ -1,0 +1,51 @@
+.feedback-details {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 30px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+.details-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #1f2937;
+}
+
+.details-description {
+  margin: 20px 0;
+  color: #4b5563;
+  font-size: 1rem;
+}
+
+.details-meta {
+  font-size: 0.9rem;
+  color: #6b7280;
+  margin-bottom: 20px;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.details-comments {
+  border-top: 1px solid #e5e7eb;
+  padding-top: 20px;
+}
+
+.details-comments h3 {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+
+.details-comments ul {
+  list-style: none;
+  padding: 0;
+}
+
+.details-comments li {
+  background: #f3f4f6;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 6px;
+}

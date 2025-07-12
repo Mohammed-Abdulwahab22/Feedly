@@ -1,5 +1,6 @@
 import React from 'react';
 import "../styles/FeedbackCard.css";
+import { Link } from "react-router-dom";
 
 type FeedbackCardProps = {
   id: string;
@@ -13,6 +14,7 @@ type FeedbackCardProps = {
 };
 
 export const FeedbackCard: React.FC<FeedbackCardProps> = ({
+    id,
   title,
   description,
   category,
@@ -24,7 +26,7 @@ export const FeedbackCard: React.FC<FeedbackCardProps> = ({
   const formattedDate = new Date(createdAt).toLocaleDateString();
 
   return (
-    <div className="feedback-card">
+    <Link  to={`/feedback/${id}`} className="feedback-card">
       <div className="feedback-card-content">
         <h3 className="feedback-title">{title}</h3>
         <p className="feedback-description">{description}</p>
@@ -39,6 +41,6 @@ export const FeedbackCard: React.FC<FeedbackCardProps> = ({
         <div className="feedback-upvotes">⬆ {upvotes}</div>
         <div className="feedback-comments">💬 {commentsCount}</div>
       </div>
-    </div>
+    </Link>
   );
 };
