@@ -10,3 +10,13 @@ export async function getAllPosts() {
     }
   }).then(res => res.data);
 }
+
+export async function getPostById(id: string) {
+  const token = localStorage.getItem("token");
+  const response = await axios.get(`${API_BASE}/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+}
