@@ -13,7 +13,7 @@ export async function getAllPosts() {
 
 export async function getPostById(id: string) {
   const token = await getItem("token");
-  const response = await axios.get(`${API_BASE}/${id}`, {
+  const response = await axios.get(`${API_BASE}/posts/${id}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
