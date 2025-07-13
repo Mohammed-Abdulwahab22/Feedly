@@ -28,15 +28,14 @@ export const FeedbackDetails = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const userId = localStorage.getItem("userId"); // Assuming you stored this on login
 
-    if (!userId || !newComment.trim()) return;
+    if ( !newComment.trim()) return;
 
     try {
       setSubmitting(true);
-      await addComment(id!, newComment, userId);
+      await addComment(id!, newComment);
       setNewComment("");
-      await fetchPost(); // Refresh post to get updated comments
+      await fetchPost(); 
     } catch (error: any) {
       alert(error.message);
     } finally {

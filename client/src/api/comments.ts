@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const API_BASE = "http://localhost:3000/api";
 
-export async function addComment(postId: string, content: string, userId: string) {
+export async function addComment(postId: string, content: string) {
     const token = localStorage.getItem("token");
     if (!token) {
         throw new Error("User not authenticated");
@@ -12,7 +12,6 @@ export async function addComment(postId: string, content: string, userId: string
         const response = await axios.post(`${API_BASE}/comments`, {
             content,
             postId,
-            userId
         },{
             headers: {
                 Authorization: `Bearer ${token}`
