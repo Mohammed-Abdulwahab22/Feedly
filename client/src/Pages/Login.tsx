@@ -30,6 +30,7 @@ export const Login = () => {
     const response = await LoginUser(emailOrUsername, password);
     if (response.token) {
       setItem("token", response.token);
+      setItem("userId", JSON.stringify(response.userId));
       toast.success("Login successful");
       navigate("/");
     } else {

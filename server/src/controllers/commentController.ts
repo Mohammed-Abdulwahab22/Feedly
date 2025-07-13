@@ -85,41 +85,49 @@ export async function updateComment(req: AuthRequest, res: Response) {
 }
 
 export async function deleteComment(req: AuthRequest, res: Response) {
-    const commentId = req.params.id;
-    const userId = req.userID;
+  const commentId = req.params.id;
+  const userId = req.userID;
 
-    const comment = await prisma.comment.findUnique({ where: { id: commentId } });
+  const comment = await prisma.comment.findUnique({
+    where: { id: commentId },
+    select: { userId: true },
+  });
 
-    if (comment?.userId !== userId) {
-        return res.status(403).json({ error: "Not authorized" });
-    }
+  if (!comment) {
+    return res.status(404).json({ error: "Comment not found" });
+  }
 
-    try {
-        await prisma.comment.delete({
-            where: { id: commentId },
-        });
-        res.status(204).send();
-    } catch (error) {
-        res.status(500).json({ error: "Failed to delete comment" });
-    }
-}
-
-export async function getCommentsByPost(req: Request, res: Response) {
-  const { postId } = req.params;
+  if (comment.userId !== userId) {
+    return res.status(403).json({ error: "Not authorized" });
+  }
 
   try {
-    const comments = await prisma.comment.findMany({
-      where: { postId },
-      include: {
-        user: true,
-      },
-      orderBy: {
-        createdAt: 'desc',
-      },
+    await prisma.comment.delete({
+      where: { id: commentId },
     });
-
-    res.json(comments);
+    res.status(204).send();
   } catch (error) {
-    res.status(500).json({ error: "Failed to fetch comments for this post" });
+    res.status(500).json({ error: "Failed to delete comment" });
   }
+}
+
+
+export async function getCommentsByPost(req: Request, res: Response) {
+    const { postId } = req.params;
+
+    try {
+        const comments = await prisma.comment.findMany({
+            where: { postId },
+            include: {
+                user: true,
+            },
+            orderBy: {
+                createdAt: 'desc',
+            },
+        });
+
+        res.json(comments);
+    } catch (error) {
+        res.status(500).json({ error: "Failed to fetch comments for this post" });
+    }
 }
