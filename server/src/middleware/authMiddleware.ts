@@ -15,7 +15,7 @@ export function verifyToken(req: AuthRequest, res: Response, next: NextFunction)
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET!);
-    req.userID = (decoded as { userID: string }).userID;
+    req.userID = (decoded as any).userID;  
     next();
   } catch {
     res.status(403).json({ message: "Invalid or expired token" });

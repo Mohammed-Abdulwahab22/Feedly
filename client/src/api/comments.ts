@@ -7,12 +7,14 @@ export async function addComment(postId: string, content: string) {
     if (!token) {
         throw new Error("User not authenticated");
     }
-    
+
+
+
     try {
         const response = await axios.post(`${API_BASE}/comments`, {
             content,
             postId,
-        },{
+        }, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
