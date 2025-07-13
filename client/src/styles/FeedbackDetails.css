@@ -155,3 +155,35 @@
   font-size: 0.95rem;
   line-height: 1.5;
 }
+
+
+
+.comment-form {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.comment-form textarea {
+  padding: 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  resize: vertical;
+  font-size: 1rem;
+}
+
+.comment-form button {
+  align-self: flex-end;
+  padding: 8px 16px;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.comment-form button:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
