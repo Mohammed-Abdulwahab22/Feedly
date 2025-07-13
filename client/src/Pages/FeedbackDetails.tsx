@@ -27,10 +27,11 @@ export const FeedbackDetails = () => {
   if (!post) return <div className="details-error">Post not found.</div>;
 
   return (
-    <div className="feedback-details">
+  <div className="feedback-details">
+    <div className="feedback-details-card">
       <div className="feedback-header">
         <h2>{post.title}</h2>
-        <p>{post.description}</p>
+        <p className="details-description">{post.description}</p>
         <div className="feedback-tags">
           <span className="badge">{post.category}</span>
           <span className="badge">⬆ {post.upvotes} Upvotes</span>
@@ -56,5 +57,7 @@ export const FeedbackDetails = () => {
         )}
       </div>
     </div>
-  );
+  </div>
+);
+
 };
