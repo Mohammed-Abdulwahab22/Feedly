@@ -28,24 +28,28 @@ export const FeedbackDetails = () => {
 
   return (
     <div className="feedback-details">
-      <h2 className="details-title">{post.title}</h2>
-      <p className="details-description">{post.description}</p>
-
-      <div className="details-meta">
-        <span>Category: {post.category}</span>
-        <span>Upvotes: {post.upvotes}</span>
-        <span>Author: {post.user.name}</span>
+      <div className="feedback-header">
+        <h2>{post.title}</h2>
+        <p>{post.description}</p>
+        <div className="feedback-tags">
+          <span className="badge">{post.category}</span>
+          <span className="badge">⬆ {post.upvotes} Upvotes</span>
+          <span className="badge">🧑 {post.user.name}</span>
+        </div>
       </div>
 
-      <div className="details-comments">
-        <h3>Comments</h3>
+      <div className="feedback-comments">
+        <h3>💬 Comments</h3>
         {post.comments.length === 0 ? (
-          <p>No comments yet.</p>
+          <p className="no-comments">No comments yet.</p>
         ) : (
           <ul>
             {post.comments.map((comment: any) => (
               <li key={comment.id}>
-                <strong>{comment.userId}</strong>: {comment.content}
+                <div className="comment-card">
+                  <strong>User ID: {comment.userId}</strong>
+                  <p>{comment.content}</p>
+                </div>
               </li>
             ))}
           </ul>
