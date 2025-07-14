@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { getAllPosts } from '../api/posts';
 import { FeedbackCard } from '../components/FeedbackCard';
+import { Link } from 'react-router-dom';
 import "../styles/Home.css";
 
 export const Home = () => {
@@ -28,6 +29,7 @@ export const Home = () => {
   return (
     <div className="home-container">
       <h1 className="home-title">Product Feedback Board</h1>
+      <Link to="/create" className="create-post-button">+ Add Feedback</Link>
 
       <div className="feedback-list">
         {posts.map(post => (
@@ -44,7 +46,7 @@ export const Home = () => {
           />
         ))}
       </div>
-      
+
     </div>
   );
 };

@@ -4,6 +4,7 @@ import { FeedbackDetails } from "./Pages/FeedbackDetails";
 import { Login } from "./Pages/Login";
 import { Register } from "./Pages/Register";
 import PrivateRoute from "./components/PrivateRoute";
+import { AddFeedbackForm } from "./components/AddFeedbackForm";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route element={<PrivateRoute />}>
           <Route path="/" element={<Home />} />
           <Route path="/feedback/:id" element={<FeedbackDetails />} />
+            <Route path="/create" element={<AddFeedbackForm />} />
         </Route>
 
 

@@ -29,3 +29,16 @@ export async function upvotePost(id: string) {
     }
   }).then(res => res.data);
 }
+
+export async function createPost(title: string, description: string, category: string) {
+  const token = await getItem("token");
+  return axios.post(`${API_BASE}/posts`, {
+    title,
+    description,
+    category
+  }, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }).then(res => res.data);
+}
