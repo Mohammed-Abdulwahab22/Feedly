@@ -3,6 +3,7 @@ import { getAllPosts } from '../api/posts';
 import { FeedbackCard } from '../components/FeedbackCard';
 import { Link } from 'react-router-dom';
 import "../styles/Home.css";
+import LogoutButton from '../components/LogoutButton';
 
 export const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -29,7 +30,10 @@ export const Home = () => {
   return (
     <div className="home-container">
       <h1 className="home-title">Product Feedback Board</h1>
-      <Link to="/create" className="create-post-button">+ Add Feedback</Link>
+      <div style={{display:"flex",gap:"80vw"}}>
+        <Link to="/create" className="create-post-button">+ Add Feedback</Link>
+        <LogoutButton />
+      </div>
 
       <div className="feedback-list">
         {posts.map(post => (
@@ -46,7 +50,6 @@ export const Home = () => {
           />
         ))}
       </div>
-
     </div>
   );
 };
