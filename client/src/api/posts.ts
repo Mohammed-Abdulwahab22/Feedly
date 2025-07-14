@@ -20,3 +20,12 @@ export async function getPostById(id: string) {
   });
   return response.data;
 }
+
+export async function upvotePost(id: string) {
+  const token = await getItem("token");
+  return axios.put(`${API_BASE}/posts/${id}/upvote`, {}, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }).then(res => res.data);
+}
