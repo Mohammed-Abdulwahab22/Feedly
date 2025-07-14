@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getPostById } from '../api/posts';
+import { getPostById, upvotePost } from '../api/posts';
 import { addComment } from '../api/comments';
 import "../styles/FeedbackDetails.css";
 
@@ -43,6 +43,19 @@ export const FeedbackDetails = () => {
     }
   };
 
+  const handleUpvote = async () => {
+    try {
+      await upvotePost(id!);
+      setPost((prev: any) => ({
+        ...prev,
+        upvotes: prev.upvotes + 1
+      }));
+    }
+    catch (error) {
+      console.error("Failed to upvote post:", error);
+    }
+  }
+
   if (loading) return <div className="details-loading">Loading...</div>;
   if (!post) return <div className="details-error">Post not found.</div>;
 
@@ -54,7 +67,7 @@ export const FeedbackDetails = () => {
           <p className="details-description">{post.description}</p>
           <div className="feedback-tags">
             <span className="badge">{post.category}</span>
-            <span className="badge">⬆ {post.upvotes} Upvotes</span>
+            <button className="badge" onClick={() =>{ handleUpvote()}}>⬆ {post.upvotes} Upvotes</button>
             <span className="badge">🧑 {post.user.name}</span>
           </div>
         </div>
