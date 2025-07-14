@@ -15,3 +15,11 @@ export async function setItem(key: string, value: any): Promise<void> {
         console.error(`Error setting item in storage: ${error}`);
     }
 }
+
+export async function clearStorage(): Promise<void> {
+    try {
+        localStorage.clear();
+    } catch (error) {
+        console.error(`Error clearing storage: ${error}`);
+    }
+}
