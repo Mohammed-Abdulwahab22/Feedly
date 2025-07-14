@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { getPostById, upvotePost } from '../api/posts';
 import { addComment } from '../api/comments';
 import "../styles/FeedbackDetails.css";
+import { toast } from 'react-toastify';
 
 export const FeedbackDetails = () => {
   const { id } = useParams<{ id: string }>();
@@ -29,13 +30,13 @@ export const FeedbackDetails = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if ( !newComment.trim()) return;
+    if (!newComment.trim()) return;
 
     try {
       setSubmitting(true);
       await addComment(id!, newComment);
       setNewComment("");
-      await fetchPost(); 
+      await fetchPost();
     } catch (error: any) {
       alert(error.message);
     } finally {
@@ -44,17 +45,27 @@ export const FeedbackDetails = () => {
   };
 
   const handleUpvote = async () => {
+    const upvotedPosts = JSON.parse(localStorage.getItem("upvotedPosts") || "[]");
+
+    if (upvotedPosts.includes(id)) {
+      toast.error("You've already upvoted this post.");
+      return;
+    }
+
     try {
       await upvotePost(id!);
       setPost((prev: any) => ({
         ...prev,
         upvotes: prev.upvotes + 1
       }));
-    }
-    catch (error) {
+
+      upvotedPosts.push(id);
+      localStorage.setItem("upvotedPosts", JSON.stringify(upvotedPosts));
+    } catch (error) {
       console.error("Failed to upvote post:", error);
     }
-  }
+  };
+
 
   if (loading) return <div className="details-loading">Loading...</div>;
   if (!post) return <div className="details-error">Post not found.</div>;
@@ -67,7 +78,7 @@ export const FeedbackDetails = () => {
           <p className="details-description">{post.description}</p>
           <div className="feedback-tags">
             <span className="badge">{post.category}</span>
-            <button className="badge" onClick={() =>{ handleUpvote()}}>⬆ {post.upvotes} Upvotes</button>
+            <button className="badge" onClick={() => { handleUpvote() }}>⬆ {post.upvotes} Upvotes</button>
             <span className="badge">🧑 {post.user.name}</span>
           </div>
         </div>
