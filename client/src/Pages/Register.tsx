@@ -18,6 +18,7 @@ export const Register = () => {
       const token = await getItem("token");
       if (token) {
         navigate("/");
+        toast.success("You are already logged in");
       }
     }
 
